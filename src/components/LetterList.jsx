@@ -1,6 +1,3 @@
-import { useContext } from "react";
-import { LetterContext } from "shared/LetterContext";
-import { MemberContext } from "shared/MemberContext";
 import styled from "styled-components";
 
 const StUl = styled.ul``;
@@ -32,10 +29,7 @@ const StDeleteBtn = styled.button`
   margin-top: 10px;
 `;
 
-function LetterList() {
-  const memberData = useContext(MemberContext);
-  const letterData = useContext(LetterContext);
-
+function LetterList({ memberId, letters, setLetters }) {
   const confirmDelete = (id) => {
     if (window.confirm("정말로 삭제하시겠습니까?")) {
       deleteLetter(id);
@@ -45,9 +39,9 @@ function LetterList() {
   };
 
   const deleteLetter = (id) => {
-    const newLetters = letterData.letters.filter((letter) => letter.id !== id);
+    const newLetters = letters.filter((letter) => letter.id !== id);
 
-    letterData.setLetters(newLetters);
+    setLetters(newLetters);
   };
 
   const modifyLetter = (id) => {
@@ -58,8 +52,8 @@ function LetterList() {
   return (
     <div>
       <StUl>
-        {letterData.letters
-          .filter((letter) => letter.writedTo === memberData.memberId)
+        {letters
+          .filter((letter) => letter.writedTo === memberId)
           .map((letter) => {
             return (
               <StLi key={letter.id}>

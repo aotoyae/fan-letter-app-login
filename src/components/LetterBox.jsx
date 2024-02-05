@@ -2,7 +2,6 @@ import styled from "styled-components";
 import LetterList from "./LetterList";
 import Form from "./Form";
 import { useState } from "react";
-import { LetterContext } from "shared/LetterContext";
 
 const StWrap = styled.div`
   margin: 0 auto;
@@ -27,19 +26,21 @@ const StArticle = styled.article`
   border: 1px solid #000;
 `;
 
-function LetterBox() {
+function LetterBox({ memberId }) {
   const [letters, setLetters] = useState([]);
 
   return (
     <StWrap>
-      <LetterContext.Provider value={{ letters, setLetters }}>
-        <StArticle>
-          <Form />
-        </StArticle>
-        <StArticle>
-          <LetterList />
-        </StArticle>
-      </LetterContext.Provider>
+      <StArticle>
+        <Form memberId={memberId} letters={letters} setLetters={setLetters} />
+      </StArticle>
+      <StArticle>
+        <LetterList
+          memberId={memberId}
+          letters={letters}
+          setLetters={setLetters}
+        />
+      </StArticle>
     </StWrap>
   );
 }

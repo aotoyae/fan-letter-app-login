@@ -1,6 +1,5 @@
 import LetterBox from "components/LetterBox";
 import { useParams } from "react-router-dom";
-import { MemberContext } from "shared/MemberContext";
 import { memberData } from "shared/MemberData";
 import styled from "styled-components";
 
@@ -27,9 +26,7 @@ function Member() {
   return (
     <StContainer>
       <StH1>To {foundData.name}</StH1>
-      <MemberContext.Provider value={{ memberId }}>
-        <LetterBox />
-      </MemberContext.Provider>
+      <LetterBox memberId={memberId} />
     </StContainer>
   );
 }

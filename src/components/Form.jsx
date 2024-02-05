@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import uuid from "react-uuid";
-import { useContext, useState } from "react";
-import { MemberContext } from "shared/MemberContext";
-import { LetterContext } from "shared/LetterContext";
+import { useState } from "react";
 
 const StForm = styled.form`
   height: 100%;
@@ -31,13 +29,9 @@ const StBtn = styled.button`
   height: 30px;
 `;
 
-function Form() {
+function Form({ memberId, letters, setLetters }) {
   const [nickName, setNickName] = useState("");
   const [content, setContent] = useState("");
-
-  const memberData = useContext(MemberContext);
-  const letterData = useContext(LetterContext);
-  console.log("hi");
 
   const addLetter = (e) => {
     e.preventDefault();
@@ -51,10 +45,10 @@ function Form() {
         id: uuid(),
         nickName,
         content,
-        writedTo: memberData.memberId,
+        writedTo: memberId,
       };
 
-      letterData.setLetters([...letterData.letters, newLetter]);
+      setLetters([...letters, newLetter]);
       setNickName("");
       setContent("");
     }
