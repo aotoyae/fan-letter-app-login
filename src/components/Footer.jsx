@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const StFooter = styled.footer`
-  border: 1px solid #000;
   height: 10vh;
 `;
 

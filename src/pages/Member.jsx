@@ -21,12 +21,12 @@ function Member() {
     return member.id === params.id;
   });
 
-  const memberId = foundData.id;
+  const { id } = foundData;
 
   return (
     <StContainer>
       <StH1>To {foundData.name}</StH1>
-      <LetterBox memberId={memberId} />
+      <LetterBox memberId={id} />
     </StContainer>
   );
 }

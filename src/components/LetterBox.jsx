@@ -7,7 +7,7 @@ const StWrap = styled.div`
   margin: 0 auto;
   padding: 20px 30px;
   width: 65%;
-  height: 40vh;
+  height: 45vh;
   display: grid;
 
   grid-template-columns: 30% 70%;
@@ -19,7 +19,7 @@ const StWrap = styled.div`
 `;
 
 const StArticle = styled.article`
-  padding: 10px;
+  padding: 8px 10px;
   overflow-x: scroll;
   text-align: left;
 

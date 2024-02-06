@@ -7,31 +7,48 @@ const StForm = styled.form`
 `;
 
 const StSection = styled.section`
-  height: 80%;
+  height: 70%;
+  & input {
+    width: 100%;
+    height: 30px;
+    margin-bottom: 5px;
+    padding: 5px;
+
+    border-radius: 10px;
+    border: 1px solid #000;
+  }
+  & textarea {
+    width: 100%;
+    height: 70px;
+    margin-bottom: 10px;
+    padding: 5px;
+
+    border-radius: 10px;
+    border: 1px solid #000;
+    resize: none;
+  }
 `;
 
-const StP = styled.p`
+const StLabel = styled.label`
   text-align: left;
-  height: 25px;
+  line-height: 25px;
 `;
 
-const StInput = styled.input`
-  width: 100%;
-  height: 30px;
-  margin-bottom: 10px;
-
-  border-radius: 10px;
-  border: 1px solid #000;
+const StSelectSection = styled.div`
+  height: 15%;
+  padding: 5px;
+  text-align: right;
 `;
 
 const StBtn = styled.button`
   width: 100%;
-  height: 30px;
+  height: 35px;
 `;
 
 function Form({ memberId, letters, setLetters }) {
   const [nickName, setNickName] = useState("");
   const [content, setContent] = useState("");
+  const [member, setMember] = useState(memberId);
 
   const addLetter = (e) => {
     e.preventDefault();
@@ -44,8 +61,16 @@ function Form({ memberId, letters, setLetters }) {
       const newLetter = {
         id: uuid(),
         nickName,
+        createdAt: new Date().toLocaleDateString("ko", {
+          year: "2-digit",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        }),
         content,
-        writedTo: memberId,
+        writedTo: member,
       };
 
       setLetters([...letters, newLetter]);
@@ -57,19 +82,29 @@ function Form({ memberId, letters, setLetters }) {
   return (
     <StForm onSubmit={addLetter}>
       <StSection>
-        <StP>닉네임</StP>
-        <StInput
+        <StLabel>닉네임</StLabel>
+        <input
           type="text"
           value={nickName}
           onChange={(e) => setNickName(e.target.value)}
+          placeholder="최대 20자"
+          maxLength={20}
         />
-        <StP>내용</StP>
-        <StInput
-          type="text"
+        <StLabel>내용</StLabel>
+        <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
+          placeholder="최대 100자"
+          maxLength={100}
         />
       </StSection>
+      <StSelectSection>
+        <StLabel>To </StLabel>
+        <select onChange={(e) => setMember(e.target.value)}>
+          <option value="mads">Mads</option>
+          <option value="jonathan"> Jonathan</option>
+        </select>
+      </StSelectSection>
       <StBtn type="submit">click</StBtn>
     </StForm>
   );

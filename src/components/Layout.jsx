@@ -9,11 +9,15 @@ const StLayout = styled.div`
   text-align: center;
 `;
 
+const StCihldren = styled.div`
+  border: 1px solid #000;
+`;
+
 function Layout({ children }) {
   return (
     <StLayout>
       <Header />
-      <div>{children}</div>
+      <StCihldren>{children}</StCihldren>
       <Footer />
     </StLayout>
   );
