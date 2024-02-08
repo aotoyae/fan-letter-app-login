@@ -25,14 +25,14 @@ const StArticle = styled.article`
   border: 1px solid #000;
 `;
 
-function LetterBox({ memberId }) {
+function LetterBox() {
   return (
     <StWrap>
       <StArticle>
-        <Form memberId={memberId} />
+        <Form />
       </StArticle>
       <StArticle>
-        <LetterList memberId={memberId} />
+        <LetterList />
       </StArticle>
     </StWrap>
   );

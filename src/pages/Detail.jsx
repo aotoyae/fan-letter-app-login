@@ -82,7 +82,6 @@ function Detail() {
   const { nickName, createdAt, content, writedTo } = letters.find(
     (letter) => letter.id === id
   );
-  const name = writedTo.charAt(0).toUpperCase() + writedTo.slice(1);
 
   const onEditDone = () => {
     if (!editingText) return alert("수정사항이 없습니다.");
@@ -107,7 +106,7 @@ function Detail() {
 
   return (
     <StContainer>
-      <ToHeader memberName={name} />
+      <ToHeader />
       <StWrap>
         <UserSection>
           <Avatar size="large" />

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Avatar from "./common/Avatar";
 import { useContext } from "react";
 import { LetterContext } from "context/LetterContext";
+import { MemberContext } from "context/MemberContext";
 
 const StLi = styled.li`
   margin: 10px 0;
@@ -37,19 +38,20 @@ const Content = styled.p`
   text-overflow: ellipsis;
 `;
 
-function LetterList({ memberId }) {
+function LetterList() {
   const { letters } = useContext(LetterContext);
+  const { activeMember } = useContext(MemberContext);
 
   const navigate = useNavigate();
 
   const filteredLetters = letters.filter(
-    (letter) => letter.writedTo === memberId
+    (letter) => letter.writedTo === activeMember
   );
 
   return (
     <ul>
       {filteredLetters.length === 0 ? (
-        <p>{memberId} 에게 보내는 첫 팬레터의 주인공이 되어보세요!</p>
+        <p>{activeMember} 에게 보내는 첫 팬레터의 주인공이 되어보세요!</p>
       ) : (
         filteredLetters.map((letter) => {
           return (

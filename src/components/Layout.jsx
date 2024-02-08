@@ -1,7 +1,9 @@
+import { MemberContext } from "context/MemberContext";
 import Footer from "./Footer";
 import Header from "./Header";
 
 import styled from "styled-components";
+import { useState } from "react";
 
 const StLayout = styled.div`
   margin: 0;
@@ -14,11 +16,15 @@ const StCihldren = styled.div`
 `;
 
 function Layout({ children }) {
+  const [activeMember, setActiveMember] = useState("");
+
   return (
     <StLayout>
-      <Header />
-      <StCihldren>{children}</StCihldren>
-      <Footer />
+      <MemberContext.Provider value={{ activeMember, setActiveMember }}>
+        <Header />
+        <StCihldren>{children}</StCihldren>
+        <Footer />
+      </MemberContext.Provider>
     </StLayout>
   );
 }

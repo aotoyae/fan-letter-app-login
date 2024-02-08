@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { MemberContext } from "context/MemberContext";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { memberData } from "shared/MemberData";
 import styled, { css } from "styled-components";
@@ -30,7 +31,7 @@ const StBtn = styled.button`
 `;
 
 function Tabs() {
-  const [activeMember, setActiveMember] = useState("");
+  const { activeMember, setActiveMember } = useContext(MemberContext);
 
   const onActiveMember = (e) => {
     setActiveMember(e.target.innerHTML);

@@ -2,6 +2,7 @@ import styled from "styled-components";
 import uuid from "react-uuid";
 import { useContext, useEffect, useState } from "react";
 import { LetterContext } from "context/LetterContext";
+import { MemberContext } from "context/MemberContext";
 
 const StForm = styled.form`
   height: 100%;
@@ -48,16 +49,17 @@ const StBtn = styled.button`
   height: 35px;
 `;
 
-function Form({ memberId }) {
+function Form() {
   const { letters, setLetters } = useContext(LetterContext);
+  const { activeMember } = useContext(MemberContext);
 
   const [nickName, setNickName] = useState("");
   const [content, setContent] = useState("");
-  const [member, setMember] = useState(memberId);
+  const [member, setMember] = useState(activeMember);
 
   useEffect(() => {
-    setMember(memberId);
-  }, [memberId]);
+    setMember(activeMember);
+  }, [activeMember]);
 
   const addLetter = (e) => {
     e.preventDefault();
