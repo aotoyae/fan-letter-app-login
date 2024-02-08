@@ -9,18 +9,18 @@ const StH1 = styled.h1`
   line-height: 10vh;
 `;
 
-const linkStyle = {
-  textDecoration: "none",
-  color: "#000",
-};
+const StLink = styled(Link)`
+  text-decoration: none;
+  color: #000;
+`;
 
 function Footer() {
   return (
     <StFooter>
       <StH1>
-        <Link to="https://github.com/aotoyae" target="_blank" style={linkStyle}>
+        <StLink to="https://github.com/aotoyae/fan-letter-app" target="_blank">
           @aotoyae
-        </Link>
+        </StLink>
       </StH1>
     </StFooter>
   );

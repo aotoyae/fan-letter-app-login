@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import { memberData } from "shared/MemberData";
 import styled, { css } from "styled-components";
 
-const btnLinkStyle = {
-  textDecoration: "none",
-};
+const StLink = styled(Link)`
+  text-decoration: none;
+`;
 
 const StUl = styled.ul`
   display: flex;
@@ -40,15 +40,11 @@ function Tabs() {
     <StUl>
       {memberData.map((member) => {
         return (
-          <Link
-            to={`/member/${member.id}`}
-            key={member.id}
-            style={btnLinkStyle}
-          >
+          <StLink to={`/member/${member.id}`} key={member.id}>
             <StBtn $activeMember={activeMember} onClick={onActiveMember}>
               {member.id}
             </StBtn>
-          </Link>
+          </StLink>
         );
       })}
     </StUl>

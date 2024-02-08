@@ -11,19 +11,17 @@ const StHeader = styled.header`
   align-items: center;
 `;
 
-const Linkstyle = {
-  textDecoration: "none",
-  color: "#000",
-  fontSize: "70px",
-  fontWeight: "bold",
-};
+const StLink = styled(Link)`
+  text-decoration: none;
+  font-size: 70px;
+  font-weight: bold;
+  color: #000;
+`;
 
 function Header() {
   return (
     <StHeader>
-      <Link to={`/`} style={Linkstyle}>
-        Phlake
-      </Link>
+      <StLink to={`/`}>Phlake</StLink>
       <Tabs />
     </StHeader>
   );
