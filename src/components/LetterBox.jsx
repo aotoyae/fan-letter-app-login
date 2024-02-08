@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import LetterList from "./LetterList";
 import Form from "./Form";
-import { useState } from "react";
 
 const StWrap = styled.div`
   margin: 0 auto;

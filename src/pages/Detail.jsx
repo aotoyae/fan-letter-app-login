@@ -1,6 +1,7 @@
 import LetterBtn from "components/LetterBtn";
 import ToHeader from "components/ToHeader";
 import Avatar from "components/common/Avatar";
+import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 
@@ -27,18 +28,35 @@ const UserInfo = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  flex-grow: 1;
   padding-top: 17px;
   text-align: left;
 `;
 
 const Btns = styled.div`
+  margin-top: -20px;
   display: flex;
   gap: 10px;
+  justify-content: flex-end;
   & button {
     width: 80px;
     height: 25px;
+    cursor: pointer;
   }
+`;
+
+const Textarea = styled.textarea`
+  width: 100%;
+  height: 60%;
+  margin-top: 25px;
+  padding: 10px;
+  resize: none;
+  text-align: center;
+
+  border-top: 1px solid red;
+  border-bottom: 1px solid red;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  outline-color: red;
 `;
 
 const Content = styled.p`
@@ -53,13 +71,27 @@ const Content = styled.p`
 `;
 
 function Detail({ letters, setLetters }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingText, setEditingText] = useState("");
+
   const navigate = useNavigate();
   const { id } = useParams();
   const { nickName, createdAt, content, writedTo } = letters.find(
     (letter) => letter.id === id
   );
-
   const name = writedTo.charAt(0).toUpperCase() + writedTo.slice(1);
+
+  const onEditDone = () => {
+    if (!editingText) return alert("수정사항이 없습니다.");
+
+    const newLetters = letters.map((letter) => {
+      return letter.id === id ? { ...letter, content: editingText } : letter;
+    });
+
+    setLetters(newLetters);
+    setIsEditing(false);
+    setEditingText("");
+  };
 
   const deleteLetter = () => {
     const answer = window.confirm("정말로 삭제하시겠습니까?");
@@ -80,12 +112,28 @@ function Detail({ letters, setLetters }) {
             <h2>{nickName}</h2>
             <time>{createdAt}</time>
           </UserInfo>
-          <Btns>
-            <LetterBtn text="modify" />
-            <LetterBtn text="delete" onClick={deleteLetter} />
-          </Btns>
         </UserSection>
-        <Content>{content}</Content>
+        {isEditing ? (
+          <>
+            <Btns>
+              <LetterBtn text="cancel" onClick={() => setIsEditing(false)} />
+              <LetterBtn text="complete" onClick={onEditDone} />
+            </Btns>
+            <Textarea
+              autoFocus
+              defaultValue={content}
+              onChange={(e) => setEditingText(e.target.value)}
+            />
+          </>
+        ) : (
+          <>
+            <Btns>
+              <LetterBtn text="modify" onClick={() => setIsEditing(true)} />
+              <LetterBtn text="delete" onClick={deleteLetter} />
+            </Btns>
+            <Content>{content}</Content>
+          </>
+        )}
       </StWrap>
     </StContainer>
   );

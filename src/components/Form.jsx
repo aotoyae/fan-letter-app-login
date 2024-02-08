@@ -105,6 +105,9 @@ function Form({ memberId, letters, setLetters }) {
       <StSelectSection>
         <StLabel>To </StLabel>
         <select onChange={(e) => setMember(e.target.value)}>
+          <option value="" selected disabled>
+            ======
+          </option>
           <option value="mads">Mads</option>
           <option value="jonathan"> Jonathan</option>
         </select>
