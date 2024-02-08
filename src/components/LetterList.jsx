@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Avatar from "./common/Avatar";
+import { useContext } from "react";
+import { LetterContext } from "context/LetterContext";
 
 const StLi = styled.li`
   margin: 10px 0;
@@ -35,7 +37,9 @@ const Content = styled.p`
   text-overflow: ellipsis;
 `;
 
-function LetterList({ memberId, letters }) {
+function LetterList({ memberId }) {
+  const { letters } = useContext(LetterContext);
+
   const navigate = useNavigate();
 
   const filteredLetters = letters.filter(

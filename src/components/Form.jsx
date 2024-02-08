@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import uuid from "react-uuid";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { LetterContext } from "context/LetterContext";
 
 const StForm = styled.form`
   height: 100%;
@@ -47,7 +48,9 @@ const StBtn = styled.button`
   height: 35px;
 `;
 
-function Form({ memberId, letters, setLetters }) {
+function Form({ memberId }) {
+  const { letters, setLetters } = useContext(LetterContext);
+
   const [nickName, setNickName] = useState("");
   const [content, setContent] = useState("");
   const [member, setMember] = useState(memberId);

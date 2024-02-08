@@ -1,7 +1,8 @@
 import LetterBtn from "components/LetterBtn";
 import ToHeader from "components/ToHeader";
 import Avatar from "components/common/Avatar";
-import { useState } from "react";
+import { LetterContext } from "context/LetterContext";
+import { useContext, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 
@@ -70,7 +71,9 @@ const Content = styled.p`
   text-overflow: ellipsis;
 `;
 
-function Detail({ letters, setLetters }) {
+function Detail() {
+  const { letters, setLetters } = useContext(LetterContext);
+
   const [isEditing, setIsEditing] = useState(false);
   const [editingText, setEditingText] = useState("");
 

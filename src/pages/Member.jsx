@@ -8,7 +8,7 @@ const StContainer = styled.div`
   height: 65vh;
 `;
 
-function Member({ letters, setLetters }) {
+function Member() {
   const params = useParams();
 
   const foundData = memberData.find((member) => {
@@ -21,7 +21,7 @@ function Member({ letters, setLetters }) {
   return (
     <StContainer>
       <ToHeader memberName={name} />
-      <LetterBox memberId={id} letters={letters} setLetters={setLetters} />
+      <LetterBox memberId={id} />
     </StContainer>
   );
 }
