@@ -1,6 +1,7 @@
+import LetterBtn from "components/LetterBtn";
 import ToHeader from "components/ToHeader";
 import Avatar from "components/common/Avatar";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 const StContainer = styled.div`
@@ -51,13 +52,23 @@ const Content = styled.p`
   text-overflow: ellipsis;
 `;
 
-function Detail({ letters }) {
+function Detail({ letters, setLetters }) {
+  const navigate = useNavigate();
   const { id } = useParams();
   const { nickName, createdAt, content, writedTo } = letters.find(
     (letter) => letter.id === id
   );
 
   const name = writedTo.charAt(0).toUpperCase() + writedTo.slice(1);
+
+  const deleteLetter = () => {
+    const answer = window.confirm("정말로 삭제하시겠습니까?");
+    if (!answer) return;
+
+    const newLetters = letters.filter((letter) => letter.id !== id);
+    navigate(`/member/${writedTo}`);
+    setLetters(newLetters);
+  };
 
   return (
     <StContainer>
@@ -70,8 +81,8 @@ function Detail({ letters }) {
             <time>{createdAt}</time>
           </UserInfo>
           <Btns>
-            <button>modify</button>
-            <button>delete</button>
+            <LetterBtn text="modify" />
+            <LetterBtn text="delete" onClick={deleteLetter} />
           </Btns>
         </UserSection>
         <Content>{content}</Content>

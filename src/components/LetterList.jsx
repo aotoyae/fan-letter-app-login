@@ -35,32 +35,19 @@ const Content = styled.p`
   text-overflow: ellipsis;
 `;
 
-function LetterList({ memberId, letters, setLetters }) {
+function LetterList({ memberId, letters }) {
   const navigate = useNavigate();
-  const confirmDelete = (id) => {
-    if (window.confirm("정말로 삭제하시겠습니까?")) {
-      deleteLetter(id);
-    } else {
-      return;
-    }
-  };
 
-  const deleteLetter = (id) => {
-    const newLetters = letters.filter((letter) => letter.id !== id);
-
-    setLetters(newLetters);
-  };
-
-  const modifyLetter = (id) => {
-    // if (True) {
-    // }
-  };
+  const filteredLetters = letters.filter(
+    (letter) => letter.writedTo === memberId
+  );
 
   return (
     <ul>
-      {letters
-        .filter((letter) => letter.writedTo === memberId)
-        .map((letter) => {
+      {filteredLetters.length === 0 ? (
+        <p>{memberId} 에게 보내는 첫 팬레터의 주인공이 되어보세요!</p>
+      ) : (
+        filteredLetters.map((letter) => {
           return (
             <StLi
               key={letter.id}
@@ -76,7 +63,8 @@ function LetterList({ memberId, letters, setLetters }) {
               <Content>{letter.content}</Content>
             </StLi>
           );
-        })}
+        })
+      )}
     </ul>
   );
 }
