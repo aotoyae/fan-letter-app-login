@@ -1,20 +1,14 @@
 import LetterBox from "components/LetterBox";
+import ToHeader from "components/ToHeader";
 import { useParams } from "react-router-dom";
 import { memberData } from "shared/MemberData";
 import styled from "styled-components";
 
 const StContainer = styled.div`
-  border: 1px solid #000;
   height: 65vh;
 `;
 
-const StH1 = styled.div`
-  height: 15vh;
-  line-height: 15vh;
-  font-size: 50px;
-`;
-
-function Member() {
+function Member({ letters, setLetters }) {
   const params = useParams();
 
   const foundData = memberData.find((member) => {
@@ -22,11 +16,12 @@ function Member() {
   });
 
   const { id } = foundData;
+  const { name } = foundData;
 
   return (
     <StContainer>
-      <StH1>To {foundData.name}</StH1>
-      <LetterBox memberId={id} />
+      <ToHeader memberName={name} />
+      <LetterBox memberId={id} letters={letters} setLetters={setLetters} />
     </StContainer>
   );
 }

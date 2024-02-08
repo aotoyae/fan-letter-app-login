@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import uuid from "react-uuid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const StForm = styled.form`
   height: 100%;
@@ -49,6 +49,10 @@ function Form({ memberId, letters, setLetters }) {
   const [nickName, setNickName] = useState("");
   const [content, setContent] = useState("");
   const [member, setMember] = useState(memberId);
+
+  useEffect(() => {
+    setMember(memberId);
+  }, [memberId]);
 
   const addLetter = (e) => {
     e.preventDefault();

@@ -26,9 +26,7 @@ const StArticle = styled.article`
   border: 1px solid #000;
 `;
 
-function LetterBox({ memberId }) {
-  const [letters, setLetters] = useState([]);
-
+function LetterBox({ memberId, letters, setLetters }) {
   return (
     <StWrap>
       <StArticle>

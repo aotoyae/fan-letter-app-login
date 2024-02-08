@@ -1,6 +1,6 @@
-import fakeData from "../shared/fakeData.json";
 import styled from "styled-components";
-import profile from "assets/profile.png";
+import { useNavigate } from "react-router-dom";
+import Avatar from "./common/Avatar";
 
 const StLi = styled.li`
   margin: 10px 0;
@@ -21,19 +21,6 @@ const UserSection = styled.section`
   gap: 15px;
 `;
 
-const UserFigure = styled.figure`
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  overflow: hidden;
-  & img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
-  }
-`;
-
 const UserInfo = styled.div`
   display: flex;
   flex-direction: column;
@@ -48,26 +35,8 @@ const Content = styled.p`
   text-overflow: ellipsis;
 `;
 
-// const StInput = styled.input`
-//   width: 70%;
-//   height: 70px;
-//   margin: 0 15px 15px 0;
-//   float: left;
-// `;
-
-// const StModifyBtn = styled.button`
-//   width: 25%;
-//   height: 30px;
-// `;
-
-// const StDeleteBtn = styled.button`
-//   width: 25%;
-//   height: 30px;
-//   margin-top: 10px;
-// `;
-
 function LetterList({ memberId, letters, setLetters }) {
-  // console.log(fakeData);
+  const navigate = useNavigate();
   const confirmDelete = (id) => {
     if (window.confirm("정말로 삭제하시겠습니까?")) {
       deleteLetter(id);
@@ -93,26 +62,18 @@ function LetterList({ memberId, letters, setLetters }) {
         .filter((letter) => letter.writedTo === memberId)
         .map((letter) => {
           return (
-            <StLi key={letter.id}>
+            <StLi
+              key={letter.id}
+              onClick={() => navigate(`/detail/${letter.id}`)}
+            >
               <UserSection>
-                <UserFigure>
-                  <img src={profile} alt="아바타이미지" />
-                </UserFigure>
+                <Avatar />
                 <UserInfo>
                   <h2>{letter.nickName}</h2>
                   <time>{letter.createdAt}</time>
                 </UserInfo>
               </UserSection>
-              <Content>
-                {/* <StInput defaultValue={letter.content} readOnly="True" /> */}
-                {letter.content}
-              </Content>
-              {/* <StModifyBtn onClick={() => modifyLetter(letter.id)}>
-                  수정하기
-                </StModifyBtn>
-                <StDeleteBtn onClick={() => confirmDelete(letter.id)}>
-                  삭제하기
-                </StDeleteBtn> */}
+              <Content>{letter.content}</Content>
             </StLi>
           );
         })}
