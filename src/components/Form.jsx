@@ -16,16 +16,18 @@ const StSection = styled.section`
 
     border-radius: 10px;
     border: 1px solid #000;
+    outline-color: red;
   }
   & textarea {
     width: 100%;
     height: 70px;
     margin-bottom: 10px;
     padding: 5px;
+    resize: none;
 
     border-radius: 10px;
     border: 1px solid #000;
-    resize: none;
+    outline-color: red;
   }
 `;
 
