@@ -111,8 +111,8 @@ function Form() {
       </StSection>
       <StSelectSection>
         <StLabel>To </StLabel>
-        <select onChange={(e) => setMember(e.target.value)}>
-          <option value="" selected disabled>
+        <select defaultValue="base" onChange={(e) => setMember(e.target.value)}>
+          <option value="base" disabled>
             ======
           </option>
           <option value="mads">Mads</option>
