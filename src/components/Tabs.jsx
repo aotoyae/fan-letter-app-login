@@ -1,6 +1,6 @@
-import { MemberContext } from "context/MemberContext";
-import { useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { setMember } from "../redux/modules/member";
 import { memberData } from "shared/MemberData";
 import styled, { css } from "styled-components";
 
@@ -31,10 +31,12 @@ const StBtn = styled.button`
 `;
 
 function Tabs() {
-  const { activeMember, setActiveMember } = useContext(MemberContext);
+  const activeMember = useSelector((state) => state.member);
+
+  const dispatch = useDispatch();
 
   const onActiveMember = (e) => {
-    setActiveMember(e.target.innerHTML);
+    dispatch(setMember(e.target.innerHTML));
   };
 
   return (

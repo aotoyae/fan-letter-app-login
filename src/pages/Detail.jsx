@@ -1,9 +1,10 @@
 import LetterBtn from "components/LetterBtn";
 import ToHeader from "components/ToHeader";
 import Avatar from "components/common/Avatar";
-import { LetterContext } from "context/LetterContext";
-import { useContext, useState } from "react";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { deleteLetter, editLetter } from "../redux/modules/letters";
 import styled from "styled-components";
 
 const StContainer = styled.div`
@@ -72,7 +73,8 @@ const Content = styled.p`
 `;
 
 function Detail() {
-  const { letters, setLetters } = useContext(LetterContext);
+  const letters = useSelector((state) => state.letters);
+  const dispatch = useDispatch();
 
   const [isEditing, setIsEditing] = useState(false);
   const [editingText, setEditingText] = useState("");
@@ -86,22 +88,18 @@ function Detail() {
   const onEditDone = () => {
     if (!editingText) return alert("수정사항이 없습니다.");
 
-    const newLetters = letters.map((letter) => {
-      return letter.id === id ? { ...letter, content: editingText } : letter;
-    });
-
-    setLetters(newLetters);
+    dispatch(editLetter({ id, editingText }));
     setIsEditing(false);
     setEditingText("");
   };
 
-  const deleteLetter = () => {
+  const onDeleteLetter = () => {
     const answer = window.confirm("정말로 삭제하시겠습니까?");
     if (!answer) return;
 
-    const newLetters = letters.filter((letter) => letter.id !== id);
     navigate(`/member/${writedTo}`);
-    setLetters(newLetters);
+
+    dispatch(deleteLetter(id));
   };
 
   return (
@@ -131,7 +129,7 @@ function Detail() {
           <>
             <Btns>
               <LetterBtn text="modify" onClick={() => setIsEditing(true)} />
-              <LetterBtn text="delete" onClick={deleteLetter} />
+              <LetterBtn text="delete" onClick={onDeleteLetter} />
             </Btns>
             <Content>{content}</Content>
           </>

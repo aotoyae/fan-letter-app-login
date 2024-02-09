@@ -1,5 +1,4 @@
-import { MemberContext } from "context/MemberContext";
-import { useContext } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 const StH1 = styled.div`
@@ -9,8 +8,9 @@ const StH1 = styled.div`
 `;
 
 function ToHeader() {
-  const { activeMember } = useContext(MemberContext);
-  const upperName = activeMember.charAt(0).toUpperCase() + activeMember.slice(1);
+  const activeMember = useSelector((state) => state.member);
+  const upperName =
+    activeMember.charAt(0).toUpperCase() + activeMember.slice(1);
 
   return <StH1>To {upperName}</StH1>;
 }

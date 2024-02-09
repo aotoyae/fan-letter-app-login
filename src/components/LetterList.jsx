@@ -1,9 +1,7 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Avatar from "./common/Avatar";
-import { useContext } from "react";
-import { LetterContext } from "context/LetterContext";
-import { MemberContext } from "context/MemberContext";
+import { useSelector } from "react-redux";
 
 const StLi = styled.li`
   margin: 10px 0;
@@ -39,8 +37,8 @@ const Content = styled.p`
 `;
 
 function LetterList() {
-  const { letters } = useContext(LetterContext);
-  const { activeMember } = useContext(MemberContext);
+  const letters = useSelector((state) => state.letters);
+  const activeMember = useSelector((state) => state.member);
 
   const navigate = useNavigate();
 

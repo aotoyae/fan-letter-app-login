@@ -1,9 +1,8 @@
-import { MemberContext } from "context/MemberContext";
-import Footer from "./Footer";
-import Header from "./Header";
-
 import styled from "styled-components";
-import { useState } from "react";
+import { Provider } from "react-redux";
+import Header from "components/Header";
+import Footer from "components/Footer";
+import store from "../redux/config/configStore";
 
 const StLayout = styled.div`
   margin: 0;
@@ -16,15 +15,13 @@ const StCihldren = styled.div`
 `;
 
 function Layout({ children }) {
-  const [activeMember, setActiveMember] = useState("");
-
   return (
     <StLayout>
-      <MemberContext.Provider value={{ activeMember, setActiveMember }}>
+      <Provider store={store}>
         <Header />
         <StCihldren>{children}</StCihldren>
         <Footer />
-      </MemberContext.Provider>
+      </Provider>
     </StLayout>
   );
 }

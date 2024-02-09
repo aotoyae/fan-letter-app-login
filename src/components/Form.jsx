@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import uuid from "react-uuid";
-import { useContext, useEffect, useState } from "react";
-import { LetterContext } from "context/LetterContext";
-import { MemberContext } from "context/MemberContext";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addLetter } from "../redux/modules/letters";
 
 const StForm = styled.form`
   height: 100%;
@@ -50,8 +50,8 @@ const StBtn = styled.button`
 `;
 
 function Form() {
-  const { letters, setLetters } = useContext(LetterContext);
-  const { activeMember } = useContext(MemberContext);
+  const activeMember = useSelector((state) => state.member);
+  const dispatch = useDispatch();
 
   const [nickName, setNickName] = useState("");
   const [content, setContent] = useState("");
@@ -61,7 +61,7 @@ function Form() {
     setMember(activeMember);
   }, [activeMember]);
 
-  const addLetter = (e) => {
+  const onAddLetter = (e) => {
     e.preventDefault();
 
     if (!nickName) {
@@ -84,14 +84,14 @@ function Form() {
         writedTo: member,
       };
 
-      setLetters([...letters, newLetter]);
+      dispatch(addLetter(newLetter));
       setNickName("");
       setContent("");
     }
   };
 
   return (
-    <StForm onSubmit={addLetter}>
+    <StForm onSubmit={onAddLetter}>
       <StSection>
         <StLabel>닉네임</StLabel>
         <input
