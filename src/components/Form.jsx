@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import uuid from "react-uuid";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addLetter } from "../redux/modules/letters";
+import { setMember } from "../redux/modules/member";
 
 const StForm = styled.form`
   height: 100%;
@@ -55,11 +56,11 @@ function Form() {
 
   const [nickName, setNickName] = useState("");
   const [content, setContent] = useState("");
-  const [member, setMember] = useState(activeMember);
+  // const [member, setMember] = useState(activeMember);
 
-  useEffect(() => {
-    setMember(activeMember);
-  }, [activeMember]);
+  // useEffect(() => {
+  //   setMember(activeMember);
+  // }, [activeMember]);
 
   const onAddLetter = (e) => {
     e.preventDefault();
@@ -81,7 +82,7 @@ function Form() {
           second: "2-digit",
         }),
         content,
-        writedTo: member,
+        writedTo: activeMember,
       };
 
       dispatch(addLetter(newLetter));
@@ -111,9 +112,12 @@ function Form() {
       </StSection>
       <StSelectSection>
         <StLabel>To </StLabel>
-        <select defaultValue="base" onChange={(e) => setMember(e.target.value)}>
+        <select
+          defaultValue="base"
+          onChange={(e) => dispatch(setMember(e.target.value))}
+        >
           <option value="base" disabled>
-            {member}
+            {activeMember}
           </option>
           <option value="mads">Mads</option>
           <option value="jonathan"> Jonathan</option>
