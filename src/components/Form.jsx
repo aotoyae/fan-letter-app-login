@@ -56,11 +56,6 @@ function Form() {
 
   const [nickName, setNickName] = useState("");
   const [content, setContent] = useState("");
-  // const [member, setMember] = useState(activeMember);
-
-  // useEffect(() => {
-  //   setMember(activeMember);
-  // }, [activeMember]);
 
   const onAddLetter = (e) => {
     e.preventDefault();
