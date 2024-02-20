@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { setMember } from "../redux/modules/member";
+import { setMember } from "../store/modules/member";
 import { memberData } from "shared/memberData";
 import styled, { css } from "styled-components";
 

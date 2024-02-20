@@ -4,7 +4,7 @@ import Avatar from "components/common/Avatar";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { deleteLetter, editLetter } from "../redux/modules/letters";
+import { deleteLetter, editLetter } from "../store/modules/letters";
 import styled from "styled-components";
 
 const StContainer = styled.div`

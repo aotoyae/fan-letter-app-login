@@ -2,8 +2,8 @@ import styled from "styled-components";
 import uuid from "react-uuid";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addLetter } from "../redux/modules/letters";
-import { setMember } from "../redux/modules/member";
+import { addLetter } from "../store/modules/letters";
+import { setMember } from "../store/modules/member";
 import { useNavigate } from "react-router-dom";
 
 const StForm = styled.form`
@@ -52,16 +52,15 @@ const StBtn = styled.button`
 `;
 
 function Form() {
-  const activeMember = useSelector((state) => state.member);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const activeMember = useSelector((state) => state.member);
+  const [nickName, setNickName] = useState("");
+  const [content, setContent] = useState("");
 
   useEffect(() => {
     navigate(`/member/${activeMember}`);
   }, [navigate, activeMember]);
-
-  const [nickName, setNickName] = useState("");
-  const [content, setContent] = useState("");
 
   const onAddLetter = (e) => {
     e.preventDefault();

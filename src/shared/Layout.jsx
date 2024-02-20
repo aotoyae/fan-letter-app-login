@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Provider } from "react-redux";
 import Header from "components/Header";
 import Footer from "components/Footer";
-import store from "../redux/config/configStore";
+import store from "../store/config/configStore";
 
 const StLayout = styled.div`
   margin: 0;
