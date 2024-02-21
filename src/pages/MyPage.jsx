@@ -7,8 +7,8 @@ const StContainer = styled.div`
   align-items: center;
 `;
 
-function Profile() {
-  return <StContainer>Profile</StContainer>;
+function MyPage() {
+  return <StContainer>MyPage</StContainer>;
 }
 
-export default Profile;
+export default MyPage;

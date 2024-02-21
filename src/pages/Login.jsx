@@ -1,7 +1,7 @@
 import { useInput } from "hooks/useInput";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { authLogin } from "store/modules/LogAuth";
+import { authLogin } from "store/modules/AuthLogin";
 import styled from "styled-components";
 
 const StContainer = styled.div`
@@ -29,6 +29,7 @@ const StForm = styled.form`
     color: #fff;
     border: none;
     background-color: #df0000;
+    cursor: pointer;
   }
 `;
 

@@ -3,10 +3,7 @@ import { Link } from "react-router-dom";
 import { setMember } from "../store/modules/member";
 import { memberData } from "shared/memberData";
 import styled, { css } from "styled-components";
-
-const StLink = styled(Link)`
-  text-decoration: none;
-`;
+import { authLogin } from "store/modules/AuthLogin";
 
 const StUl = styled.ul`
   display: flex;
@@ -14,7 +11,11 @@ const StUl = styled.ul`
   gap: 20px;
 `;
 
-const StBtn = styled.button`
+const StLink = styled(Link)`
+  text-decoration: none;
+`;
+
+const MemberBtn = styled.button`
   ${(props) => {
     if (props.$activeMember === props.children) {
       return css`
@@ -31,27 +32,52 @@ const StBtn = styled.button`
   cursor: pointer;
 `;
 
-function Tabs() {
-  const activeMember = useSelector((state) => state.member);
+const StSection = styled.section`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+`;
 
+const UserBtn = styled.button`
+  color: red;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+`;
+
+function Tabs() {
   const dispatch = useDispatch();
+  const activeMember = useSelector((state) => state.member);
 
   const onActiveMember = (e) => {
     dispatch(setMember(e.target.innerHTML));
   };
 
+  const onLogout = () => {
+    dispatch(authLogin(false));
+  };
+
   return (
-    <StUl>
-      {memberData.map((member) => {
-        return (
-          <StLink to={`/member/${member.id}`} key={member.id}>
-            <StBtn $activeMember={activeMember} onClick={onActiveMember}>
-              {member.id}
-            </StBtn>
-          </StLink>
-        );
-      })}
-    </StUl>
+    <>
+      <StUl>
+        {memberData.map((member) => {
+          return (
+            <StLink to={`/member/${member.id}`} key={member.id}>
+              <MemberBtn $activeMember={activeMember} onClick={onActiveMember}>
+                {member.id}
+              </MemberBtn>
+            </StLink>
+          );
+        })}
+      </StUl>
+      <StSection>
+        <StLink to={`/mypage`}>
+          <UserBtn>my page</UserBtn>
+        </StLink>
+        <UserBtn onClick={onLogout}>logout</UserBtn>
+      </StSection>
+    </>
   );
 }
 
