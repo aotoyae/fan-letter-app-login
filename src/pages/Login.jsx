@@ -1,4 +1,7 @@
+import { useInput } from "hooks/useInput";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { authLogin } from "store/modules/LogAuth";
 import styled from "styled-components";
 
 const StContainer = styled.div`
@@ -57,15 +60,71 @@ const StLink = styled(Link)`
 `;
 
 function Login() {
+  const dispatch = useDispatch();
+  const [inputId, setInputId] = useInput();
+  const [inputPwd, setInputPwd] = useInput();
+  const loginState = useSelector((state) => state.logAuth);
+  console.log(loginState);
+
+  const numRule = /[0-9]/;
+  const lowerRule = /[a-z]/;
+  const allowRule = /^[a-z0-9]*$/;
+
+  const checkIdInvalid = () => {
+    return (
+      !numRule.test(inputId) ||
+      !lowerRule.test(inputId) ||
+      !allowRule.test(inputId) ||
+      10 < inputId.length ||
+      inputId.length < 4
+    );
+  };
+
+  const checkPwdInvalid = () => {
+    return (
+      !numRule.test(inputPwd) ||
+      !lowerRule.test(inputPwd) ||
+      !allowRule.test(inputPwd) ||
+      15 < inputPwd.length ||
+      inputPwd.length < 4
+    );
+  };
+
+  const onLogin = (e) => {
+    e.preventDefault();
+
+    if (checkIdInvalid()) {
+      alert(`아이디: 4~10자의 영문 소문자, 숫자를 입력해 주세요.`);
+      return;
+    }
+
+    if (checkPwdInvalid()) {
+      alert(`비밀번호: 4~15자의 영문 소문자, 숫자를 입력해 주세요.`);
+      return;
+    }
+
+    dispatch(authLogin(true));
+  };
+
   return (
     <StContainer>
-      <StForm>
+      <StForm onSubmit={onLogin}>
         <h2>Login</h2>
         <StSection>
-          <input type="text" placeholder="아이디" />
-          <input type="password" placeholder="비밀번호" />
+          <input
+            type="text"
+            value={inputId}
+            onChange={setInputId}
+            placeholder="아이디"
+          />
+          <input
+            type="password"
+            value={inputPwd}
+            onChange={setInputPwd}
+            placeholder="비밀번호"
+          />
         </StSection>
-        <button>Login</button>
+        <button type="submit">Login</button>
         <StH3>
           <StLink to={`/register`}>Join</StLink>
         </StH3>

@@ -1,3 +1,4 @@
+import { useInput } from "hooks/useInput";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -57,16 +58,50 @@ const StLink = styled(Link)`
 `;
 
 function Register() {
+  const [inputNickname, setInputNickname] = useInput();
+  const [inputId, setInputId] = useInput();
+  const [inputPwd, setInputPwd] = useInput();
+
+  const checkNinknameInvalid = () => {
+    return 10 < inputNickname.length || inputNickname.length < 1;
+  };
+
+  const onJoin = (e) => {
+    e.preventDefault();
+
+    if (checkNinknameInvalid()) {
+      alert(`닉네임: 1~10자로 입력해 주세요.`);
+      return;
+    }
+
+    console.log("hello");
+  };
+
   return (
     <StContainer>
-      <StForm>
+      <StForm onSubmit={onJoin}>
         <h2>Register</h2>
         <StSection>
-          <input type="password" placeholder="닉네임" />
-          <input type="text" placeholder="아이디" />
-          <input type="password" placeholder="비밀번호" />
+          <input
+            type="password"
+            value={inputNickname}
+            onChange={setInputNickname}
+            placeholder="닉네임"
+          />
+          <input
+            type="text"
+            value={inputId}
+            onChange={setInputId}
+            placeholder="아이디"
+          />
+          <input
+            type="password"
+            value={inputPwd}
+            onChange={setInputPwd}
+            placeholder="비밀번호"
+          />
         </StSection>
-        <button>Register</button>
+        <button type="submit">Register</button>
         <StH3>
           <StLink to={`/login`}>login</StLink>
         </StH3>
