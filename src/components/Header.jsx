@@ -19,10 +19,12 @@ const StLink = styled(Link)`
 `;
 
 function Header() {
+  const num = 1;
+
   return (
     <StHeader>
       <StLink to={`/`}>Phlake</StLink>
-      <Tabs />
+      {num ? <Tabs /> : <h1>hi</h1>}
     </StHeader>
   );
 }
