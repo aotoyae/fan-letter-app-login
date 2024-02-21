@@ -1,6 +1,6 @@
 import { useInput } from "hooks/useInput";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { authLogin } from "store/modules/LogAuth";
 import styled from "styled-components";
 
@@ -61,15 +61,15 @@ const StLink = styled(Link)`
 
 function Login() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [inputId, setInputId] = useInput();
   const [inputPwd, setInputPwd] = useInput();
-  const loginState = useSelector((state) => state.logAuth);
-  console.log(loginState);
 
   const onLogin = (e) => {
     e.preventDefault();
 
     dispatch(authLogin(true));
+    navigate(`/`);
   };
 
   return (

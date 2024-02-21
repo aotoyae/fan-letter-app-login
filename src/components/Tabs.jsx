@@ -24,6 +24,7 @@ const StBtn = styled.button`
     }
   }}
 
+  margin-top:10px;
   border: 1px solid red;
   width: 300px;
   height: 50px;

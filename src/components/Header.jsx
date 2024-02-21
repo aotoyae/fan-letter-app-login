@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Tabs from "./Tabs";
+import { useSelector } from "react-redux";
 
 const StHeader = styled.header`
   padding: 20px;
@@ -11,20 +12,39 @@ const StHeader = styled.header`
   align-items: center;
 `;
 
-const StLink = styled(Link)`
+const HomeLink = styled(Link)`
   text-decoration: none;
   font-size: 70px;
   font-weight: bold;
   color: #000;
 `;
 
+const LoginLink = styled(Link)`
+  text-decoration: none;
+`;
+
+const StBtn = styled.button`
+  height: 70px;
+  color: red;
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+`;
+
 function Header() {
-  const num = 1;
+  const logAuth = useSelector((state) => state.logAuth);
 
   return (
     <StHeader>
-      <StLink to={`/`}>Phlake</StLink>
-      {num ? <Tabs /> : <h1>hi</h1>}
+      <HomeLink to={`/`}>Phlake</HomeLink>
+      {logAuth ? (
+        <Tabs />
+      ) : (
+        <LoginLink to={`/login`}>
+          <StBtn>Login</StBtn>
+        </LoginLink>
+      )}
     </StHeader>
   );
 }
