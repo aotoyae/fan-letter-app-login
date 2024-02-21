@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { setMember } from "../store/modules/member";
 import { memberData } from "shared/memberData";
 import styled, { css } from "styled-components";
@@ -48,6 +48,7 @@ const UserBtn = styled.button`
 
 function Tabs() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const activeMember = useSelector((state) => state.member);
 
   const onActiveMember = (e) => {
@@ -56,6 +57,7 @@ function Tabs() {
 
   const onLogout = () => {
     dispatch(authLogin(false));
+    navigate(`/`);
   };
 
   return (

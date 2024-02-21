@@ -1,11 +1,7 @@
 import GlobalStyle from "GlobalStyle";
 import Router from "shared/Router";
-// import styled from "styled-components";
-// import background from "assets/background.jpg";
-
-// const StWrap = styled.div`
-//   background-image: url(${background});
-// `;
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -14,6 +10,7 @@ function App() {
       <div>
         <Router />
       </div>
+      <ToastContainer />
     </>
   );
 }
