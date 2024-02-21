@@ -33,12 +33,12 @@ const StBtn = styled.button`
 `;
 
 function Header() {
-  const logAuth = useSelector((state) => state.logAuth);
+  const isLogin = useSelector((state) => state.authLogin.isLogin);
 
   return (
     <StHeader>
       <HomeLink to={`/`}>Phlake</HomeLink>
-      {logAuth ? (
+      {isLogin ? (
         <Tabs />
       ) : (
         <LoginLink to={`/login`}>

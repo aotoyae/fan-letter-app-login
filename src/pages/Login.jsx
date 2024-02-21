@@ -2,9 +2,10 @@ import { useInput } from "hooks/useInput";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { authLogin } from "store/modules/AuthLogin";
 import styled, { css } from "styled-components";
 import { toast } from "react-toastify";
+import axios from "axios";
+import { login } from "store/modules/AuthLogin";
 
 const StContainer = styled.div`
   height: 65vh;
@@ -41,7 +42,6 @@ const StForm = styled.form`
 
 const StBtn = styled.button`
   ${(props) => {
-    console.log(props.disabled);
     if (props.disabled) {
       return css`
         background-color: #a6a6a6;
@@ -79,9 +79,8 @@ function Login() {
   const navigate = useNavigate();
   const [nickname, setNickname] = useInput();
   const [id, setId] = useInput();
-  const [pwd, setPwd, resetInput] = useInput();
+  const [password, setPassword, resetInput] = useInput();
   const [isLoginMode, setIsLoginMode] = useState(true);
-  console.log(pwd);
 
   const numRule = /[0-9]/;
   const lowerRule = /[a-z]/;
@@ -101,41 +100,68 @@ function Login() {
     );
   };
 
-  const checkPwdInvalid = () => {
+  const checkPasswordInvalid = () => {
     return (
-      !numRule.test(pwd) ||
-      !lowerRule.test(pwd) ||
-      !allowRule.test(pwd) ||
-      15 < pwd.length ||
-      pwd.length < 4
+      !numRule.test(password) ||
+      !lowerRule.test(password) ||
+      !allowRule.test(password) ||
+      15 < password.length ||
+      password.length < 4
     );
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
 
     if (isLoginMode) {
       if (checkIdInvalid()) {
         toast.warn(`아이디: 4~10자의 영문 소문자, 숫자를 입력해 주세요.`);
-      } else if (checkPwdInvalid()) {
+      } else if (checkPasswordInvalid()) {
         toast.warn(`비밀번호: 4~15자의 영문 소문자, 숫자를 입력해 주세요.`);
       } else {
-        dispatch(authLogin(true));
-        navigate(`/`);
-        toast.success(`${id}님 반갑습니다.`);
+        try {
+          const { data } = await axios.post(
+            `https://moneyfulpublicpolicy.co.kr/login`,
+            {
+              id,
+              password,
+            }
+          );
+          if (data.success) {
+            dispatch(login(data.accessToken));
+            toast.success(`${id}님 반갑습니다.`);
+            navigate(`/`);
+          }
+        } catch (error) {
+          toast.error(error.response.data.message);
+        }
       }
     } else {
       if (checkNinknameInvalid()) {
         toast.warn(`닉네임: 1~10자로 입력해 주세요.`);
       } else if (checkIdInvalid()) {
         toast.warn(`아이디: 4~10자의 영문 소문자, 숫자를 입력해 주세요.`);
-      } else if (checkPwdInvalid()) {
+      } else if (checkPasswordInvalid()) {
         toast.warn(`비밀번호: 4~15자의 영문 소문자, 숫자를 입력해 주세요.`);
       } else {
-        dispatch(authLogin(true));
-        setIsLoginMode(true);
-        toast.success(`${id}님 회원가입에 성공하였습니다.`);
-        resetInput();
+        try {
+          const { data } = await axios.post(
+            `https://moneyfulpublicpolicy.co.kr/register`,
+            {
+              id,
+              password,
+              nickname,
+            }
+          );
+          if (data.success) {
+            setIsLoginMode(true);
+            toast.success(`${id}님 회원가입에 성공하였습니다.`);
+            resetInput();
+            navigate(`/login`);
+          }
+        } catch (error) {
+          toast.error(error.response.data.message);
+        }
       }
     }
   };
@@ -160,13 +186,15 @@ function Login() {
         />
         <input
           type="password"
-          value={pwd}
-          onChange={setPwd}
+          value={password}
+          onChange={setPassword}
           placeholder="비밀번호: 4~15자의 영문 소문자, 숫자를 입력해 주세요."
         />
         <StBtn
           type="submit"
-          disabled={isLoginMode ? !id || !pwd : !nickname || !id || !pwd}
+          disabled={
+            isLoginMode ? !id || !password : !nickname || !id || !password
+          }
         >
           {isLoginMode ? "Login" : "Join"}
         </StBtn>
