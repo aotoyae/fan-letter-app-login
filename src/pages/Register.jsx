@@ -95,20 +95,13 @@ function Register() {
 
     if (checkNinknameInvalid()) {
       alert(`닉네임: 1~10자로 입력해 주세요.`);
-      return;
-    }
-
-    if (checkIdInvalid()) {
+    } else if (checkIdInvalid()) {
       alert(`아이디: 4~10자의 영문 소문자, 숫자를 입력해 주세요.`);
-      return;
-    }
-
-    if (checkPwdInvalid()) {
+    } else if (checkPwdInvalid()) {
       alert(`비밀번호: 4~15자의 영문 소문자, 숫자를 입력해 주세요.`);
-      return;
+    } else {
+      console.log("hello");
     }
-
-    console.log("hello");
   };
 
   return (
