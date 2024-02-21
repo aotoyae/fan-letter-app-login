@@ -4,8 +4,8 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { toast } from "react-toastify";
-import axios from "axios";
 import { login } from "store/modules/AuthLogin";
+import { authApi } from "api/authApi";
 
 const StContainer = styled.div`
   height: 65vh;
@@ -120,13 +120,10 @@ function Login() {
         toast.warn(`비밀번호: 4~15자의 영문 소문자, 숫자를 입력해 주세요.`);
       } else {
         try {
-          const { data } = await axios.post(
-            `https://moneyfulpublicpolicy.co.kr/login`,
-            {
-              id,
-              password,
-            }
-          );
+          const { data } = await authApi.post(`/login`, {
+            id,
+            password,
+          });
           if (data.success) {
             dispatch(login(data.accessToken));
             toast.success(`${id}님 반갑습니다.`);
@@ -145,14 +142,11 @@ function Login() {
         toast.warn(`비밀번호: 4~15자의 영문 소문자, 숫자를 입력해 주세요.`);
       } else {
         try {
-          const { data } = await axios.post(
-            `https://moneyfulpublicpolicy.co.kr/register`,
-            {
-              id,
-              password,
-              nickname,
-            }
-          );
+          const { data } = await authApi.post(`/register`, {
+            id,
+            password,
+            nickname,
+          });
           if (data.success) {
             setIsLoginMode(true);
             toast.success(`${id}님 회원가입에 성공하였습니다.`);

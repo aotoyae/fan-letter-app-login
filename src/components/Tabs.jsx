@@ -43,6 +43,7 @@ const UserBtn = styled.button`
   color: red;
   background-color: transparent;
   border: none;
+  user-select: none;
   cursor: pointer;
 `;
 

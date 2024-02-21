@@ -17,6 +17,7 @@ const HomeLink = styled(Link)`
   font-size: 70px;
   font-weight: bold;
   color: #000;
+  user-select: none;
 `;
 
 const LoginLink = styled(Link)`
