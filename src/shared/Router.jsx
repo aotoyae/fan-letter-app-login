@@ -4,7 +4,6 @@ import Home from "pages/Home";
 import Member from "pages/Member";
 import Detail from "pages/Detail";
 import Login from "pages/Login";
-import Register from "pages/Register";
 import MyPage from "pages/MyPage";
 
 export default function Router() {
@@ -14,7 +13,6 @@ export default function Router() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/member/:id" element={<Member />} />
           <Route path="/detail/:id" element={<Detail />} />

@@ -1,6 +1,7 @@
 import { useInput } from "hooks/useInput";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { authLogin } from "store/modules/AuthLogin";
 import styled from "styled-components";
 
@@ -19,28 +20,25 @@ const StForm = styled.form`
   background-color: #ffffffa8;
 
   & h2 {
+    margin: 5px 0;
     font-size: 50px;
   }
   & button {
     width: 100%;
     height: 50px;
-    margin-top: 20px;
+    margin-top: 10px;
 
     color: #fff;
     border: none;
     background-color: #df0000;
     cursor: pointer;
   }
-`;
-
-const StSection = styled.section`
-  display: flex;
-  flex-direction: column;
-
   & input {
+    width: 100%;
     height: 50px;
     margin-bottom: 10px;
     padding-left: 10px;
+    display: block;
 
     border: none;
     border-bottom: 1px solid red;
@@ -50,21 +48,23 @@ const StSection = styled.section`
   }
 `;
 
-const StH3 = styled.h3`
+const Togglebox = styled.div`
   margin-top: 13px;
-  font-size: 18px;
-`;
 
-const StLink = styled(Link)`
-  text-decoration: none;
-  color: red;
+  & span {
+    font-size: 18px;
+    color: red;
+    cursor: pointer;
+  }
 `;
 
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [nickname, setNickname] = useInput();
   const [id, setId] = useInput();
   const [pwd, setPwd] = useInput();
+  const [isLoginMode, setIsLoginMode] = useState(true);
 
   const numRule = /[0-9]/;
   const lowerRule = /[a-z]/;
@@ -107,20 +107,34 @@ function Login() {
   return (
     <StContainer>
       <StForm onSubmit={handleLogin}>
-        <h2>Login</h2>
-        <StSection>
-          <input type="text" value={id} onChange={setId} placeholder="아이디" />
+        <h2>{isLoginMode ? "Login" : "Join"}</h2>
+        {!isLoginMode && (
           <input
-            type="password"
-            value={pwd}
-            onChange={setPwd}
-            placeholder="비밀번호"
+            type="text"
+            value={nickname}
+            onChange={setNickname}
+            placeholder="닉네임: 1~10자로 입력해 주세요."
           />
-        </StSection>
-        <button type="submit">Login</button>
-        <StH3>
-          <StLink to={`/register`}>Join</StLink>
-        </StH3>
+        )}
+
+        <input
+          type="text"
+          value={id}
+          onChange={setId}
+          placeholder="아이디: 4~10자의 영문 소문자, 숫자를 입력해 주세요."
+        />
+        <input
+          type="password"
+          value={pwd}
+          onChange={setPwd}
+          placeholder="비밀번호: 4~15자의 영문 소문자, 숫자를 입력해 주세요."
+        />
+        <button type="submit">{isLoginMode ? "Login" : "Join"}</button>
+        <Togglebox>
+          <span onClick={() => setIsLoginMode((prev) => !prev)}>
+            {isLoginMode ? "Join" : "Login"}
+          </span>
+        </Togglebox>
       </StForm>
     </StContainer>
   );
