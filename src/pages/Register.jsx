@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useInput } from "hooks/useInput";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -58,39 +59,43 @@ const StLink = styled(Link)`
 `;
 
 function Register() {
-  const [inputNickname, setInputNickname] = useInput();
-  const [inputId, setInputId] = useInput();
-  const [inputPwd, setInputPwd] = useInput();
+  const [nickname, setNickname] = useInput();
+  const [id, setId] = useInput();
+  const [pwd, setPwd] = useInput();
 
   const numRule = /[0-9]/;
   const lowerRule = /[a-z]/;
   const allowRule = /^[a-z0-9]*$/;
 
   const checkNinknameInvalid = () => {
-    return 10 < inputNickname.length || inputNickname.length < 1;
+    return 10 < nickname.length || nickname.length < 1;
   };
 
   const checkIdInvalid = () => {
     return (
-      !numRule.test(inputId) ||
-      !lowerRule.test(inputId) ||
-      !allowRule.test(inputId) ||
-      10 < inputId.length ||
-      inputId.length < 4
+      !numRule.test(id) ||
+      !lowerRule.test(id) ||
+      !allowRule.test(id) ||
+      10 < id.length ||
+      id.length < 4
     );
   };
 
   const checkPwdInvalid = () => {
     return (
-      !numRule.test(inputPwd) ||
-      !lowerRule.test(inputPwd) ||
-      !allowRule.test(inputPwd) ||
-      15 < inputPwd.length ||
-      inputPwd.length < 4
+      !numRule.test(pwd) ||
+      !lowerRule.test(pwd) ||
+      !allowRule.test(pwd) ||
+      15 < pwd.length ||
+      pwd.length < 4
     );
   };
 
-  const onJoin = (e) => {
+  const onJoin = async () => {
+    axios.post("", { nickname, id, pwd });
+  };
+
+  const handleJoin = (e) => {
     e.preventDefault();
 
     if (checkNinknameInvalid()) {
@@ -101,30 +106,26 @@ function Register() {
       alert(`비밀번호: 4~15자의 영문 소문자, 숫자를 입력해 주세요.`);
     } else {
       console.log("hello");
+      onJoin();
     }
   };
 
   return (
     <StContainer>
-      <StForm onSubmit={onJoin}>
+      <StForm onSubmit={handleJoin}>
         <h2>Register</h2>
         <StSection>
           <input
             type="text"
-            value={inputNickname}
-            onChange={setInputNickname}
+            value={nickname}
+            onChange={setNickname}
             placeholder="닉네임"
           />
-          <input
-            type="text"
-            value={inputId}
-            onChange={setInputId}
-            placeholder="아이디"
-          />
+          <input type="text" value={id} onChange={setId} placeholder="아이디" />
           <input
             type="password"
-            value={inputPwd}
-            onChange={setInputPwd}
+            value={pwd}
+            onChange={setPwd}
             placeholder="비밀번호"
           />
         </StSection>

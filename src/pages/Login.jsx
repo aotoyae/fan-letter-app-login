@@ -63,8 +63,8 @@ const StLink = styled(Link)`
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [inputId, setInputId] = useInput();
-  const [inputPwd, setInputPwd] = useInput();
+  const [id, setId] = useInput();
+  const [pwd, setPwd] = useInput();
 
   const numRule = /[0-9]/;
   const lowerRule = /[a-z]/;
@@ -72,25 +72,25 @@ function Login() {
 
   const checkIdInvalid = () => {
     return (
-      !numRule.test(inputId) ||
-      !lowerRule.test(inputId) ||
-      !allowRule.test(inputId) ||
-      10 < inputId.length ||
-      inputId.length < 4
+      !numRule.test(id) ||
+      !lowerRule.test(id) ||
+      !allowRule.test(id) ||
+      10 < id.length ||
+      id.length < 4
     );
   };
 
   const checkPwdInvalid = () => {
     return (
-      !numRule.test(inputPwd) ||
-      !lowerRule.test(inputPwd) ||
-      !allowRule.test(inputPwd) ||
-      15 < inputPwd.length ||
-      inputPwd.length < 4
+      !numRule.test(pwd) ||
+      !lowerRule.test(pwd) ||
+      !allowRule.test(pwd) ||
+      15 < pwd.length ||
+      pwd.length < 4
     );
   };
 
-  const onLogin = (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
 
     if (checkIdInvalid()) {
@@ -106,19 +106,14 @@ function Login() {
 
   return (
     <StContainer>
-      <StForm onSubmit={onLogin}>
+      <StForm onSubmit={handleLogin}>
         <h2>Login</h2>
         <StSection>
-          <input
-            type="text"
-            value={inputId}
-            onChange={setInputId}
-            placeholder="아이디"
-          />
+          <input type="text" value={id} onChange={setId} placeholder="아이디" />
           <input
             type="password"
-            value={inputPwd}
-            onChange={setInputPwd}
+            value={pwd}
+            onChange={setPwd}
             placeholder="비밀번호"
           />
         </StSection>
