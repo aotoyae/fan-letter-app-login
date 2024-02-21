@@ -62,8 +62,32 @@ function Register() {
   const [inputId, setInputId] = useInput();
   const [inputPwd, setInputPwd] = useInput();
 
+  const numRule = /[0-9]/;
+  const lowerRule = /[a-z]/;
+  const allowRule = /^[a-z0-9]*$/;
+
   const checkNinknameInvalid = () => {
     return 10 < inputNickname.length || inputNickname.length < 1;
+  };
+
+  const checkIdInvalid = () => {
+    return (
+      !numRule.test(inputId) ||
+      !lowerRule.test(inputId) ||
+      !allowRule.test(inputId) ||
+      10 < inputId.length ||
+      inputId.length < 4
+    );
+  };
+
+  const checkPwdInvalid = () => {
+    return (
+      !numRule.test(inputPwd) ||
+      !lowerRule.test(inputPwd) ||
+      !allowRule.test(inputPwd) ||
+      15 < inputPwd.length ||
+      inputPwd.length < 4
+    );
   };
 
   const onJoin = (e) => {
@@ -71,6 +95,16 @@ function Register() {
 
     if (checkNinknameInvalid()) {
       alert(`닉네임: 1~10자로 입력해 주세요.`);
+      return;
+    }
+
+    if (checkIdInvalid()) {
+      alert(`아이디: 4~10자의 영문 소문자, 숫자를 입력해 주세요.`);
+      return;
+    }
+
+    if (checkPwdInvalid()) {
+      alert(`비밀번호: 4~15자의 영문 소문자, 숫자를 입력해 주세요.`);
       return;
     }
 
@@ -83,7 +117,7 @@ function Register() {
         <h2>Register</h2>
         <StSection>
           <input
-            type="password"
+            type="text"
             value={inputNickname}
             onChange={setInputNickname}
             placeholder="닉네임"

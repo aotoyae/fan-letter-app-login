@@ -66,42 +66,8 @@ function Login() {
   const loginState = useSelector((state) => state.logAuth);
   console.log(loginState);
 
-  const numRule = /[0-9]/;
-  const lowerRule = /[a-z]/;
-  const allowRule = /^[a-z0-9]*$/;
-
-  const checkIdInvalid = () => {
-    return (
-      !numRule.test(inputId) ||
-      !lowerRule.test(inputId) ||
-      !allowRule.test(inputId) ||
-      10 < inputId.length ||
-      inputId.length < 4
-    );
-  };
-
-  const checkPwdInvalid = () => {
-    return (
-      !numRule.test(inputPwd) ||
-      !lowerRule.test(inputPwd) ||
-      !allowRule.test(inputPwd) ||
-      15 < inputPwd.length ||
-      inputPwd.length < 4
-    );
-  };
-
   const onLogin = (e) => {
     e.preventDefault();
-
-    if (checkIdInvalid()) {
-      alert(`아이디: 4~10자의 영문 소문자, 숫자를 입력해 주세요.`);
-      return;
-    }
-
-    if (checkPwdInvalid()) {
-      alert(`비밀번호: 4~15자의 영문 소문자, 숫자를 입력해 주세요.`);
-      return;
-    }
 
     dispatch(authLogin(true));
   };
