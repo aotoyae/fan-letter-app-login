@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { setMember } from "../store/modules/member";
 import { memberData } from "shared/memberData";
 import styled, { css } from "styled-components";
-import { logout } from "store/modules/AuthLogin";
+import { logout } from "store/modules/authLogin";
 
 const StUl = styled.ul`
   display: flex;

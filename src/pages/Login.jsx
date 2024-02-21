@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { toast } from "react-toastify";
-import { login } from "store/modules/AuthLogin";
+import { login } from "store/modules/authLogin";
 import { authApi } from "api/authApi";
 
 const StContainer = styled.div`
@@ -86,7 +86,7 @@ function Login() {
   const lowerRule = /[a-z]/;
   const allowRule = /^[a-z0-9]*$/;
 
-  const checkNinknameInvalid = () => {
+  const checkNicknameInvalid = () => {
     return 10 < nickname.length || nickname.length < 1;
   };
 
@@ -124,8 +124,9 @@ function Login() {
             id,
             password,
           });
+          const { accessToken, avatar, nickname, userId } = data;
           if (data.success) {
-            dispatch(login(data.accessToken));
+            dispatch(login({accessToken, avatar, nickname, userId}));
             toast.success(`${id}님 반갑습니다.`);
             navigate(`/`);
           }
@@ -134,7 +135,7 @@ function Login() {
         }
       }
     } else {
-      if (checkNinknameInvalid()) {
+      if (checkNicknameInvalid()) {
         toast.warn(`닉네임: 1~10자로 입력해 주세요.`);
       } else if (checkIdInvalid()) {
         toast.warn(`아이디: 4~10자의 영문 소문자, 숫자를 입력해 주세요.`);

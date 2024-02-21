@@ -12,6 +12,11 @@ const StForm = styled.form`
 
 const StSection = styled.section`
   height: 70%;
+
+  & div {
+    display: flex;
+    gap: 5px;
+  }
   & input {
     width: 100%;
     height: 30px;
@@ -55,7 +60,7 @@ function Form() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const activeMember = useSelector((state) => state.member);
-  const [nickName, setNickName] = useState("");
+  const { avatar, nickname } = useSelector((state) => state.authLogin);
   const [content, setContent] = useState("");
 
   useEffect(() => {
@@ -65,14 +70,12 @@ function Form() {
   const onAddLetter = (e) => {
     e.preventDefault();
 
-    if (!nickName) {
-      alert("닉네임을 입력해 주세요.");
-    } else if (!content) {
+    if (!content) {
       alert("내용을 입력해 주세요.");
     } else {
       const newLetter = {
         id: uuid(),
-        nickName,
+        nickname,
         createdAt: new Date().toLocaleDateString("ko", {
           year: "2-digit",
           month: "2-digit",
@@ -86,7 +89,6 @@ function Form() {
       };
 
       dispatch(addLetter(newLetter));
-      setNickName("");
       setContent("");
     }
   };
@@ -101,14 +103,10 @@ function Form() {
   return (
     <StForm onSubmit={onAddLetter}>
       <StSection>
-        <StLabel>닉네임</StLabel>
-        <input
-          type="text"
-          value={nickName}
-          onInput={(e) => handleOnInput(e, 20)}
-          onChange={(e) => setNickName(e.target.value)}
-          placeholder="최대 20자"
-        />
+        <div>
+          <StLabel>닉네임</StLabel>
+          <p>"{nickname}"</p>
+        </div>
         <StLabel>내용</StLabel>
         <textarea
           value={content}
