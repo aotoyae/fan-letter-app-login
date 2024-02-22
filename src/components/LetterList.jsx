@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Avatar from "./common/Avatar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { __getLetters } from "store/modules/letters";
 
 const StLi = styled.li`
   margin: 10px 0;
@@ -37,10 +39,14 @@ const Content = styled.p`
 `;
 
 function LetterList() {
-  const letters = useSelector((state) => state.letters);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const letters = useSelector((state) => state.letters.letters);
   const activeMember = useSelector((state) => state.member);
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    dispatch(__getLetters());
+  }, [dispatch]);
 
   const filteredLetters = letters.filter(
     (letter) => letter.writedTo === activeMember

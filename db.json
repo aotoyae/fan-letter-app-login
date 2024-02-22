@@ -1,3 +1,18 @@
 {
-  "letters": []
+  "letters": [
+    {
+      "id": "bf63638c-9fa8-02a5-0e8e-96871fcc52c5",
+      "nickname": "tete",
+      "createdAt": "24. 02. 22. 오후 01:04:21",
+      "content": "ㅎㅎ",
+      "writedTo": "jonathan"
+    },
+    {
+      "id": "46b5f369-5999-f9a7-5f3b-a42318fc28b8",
+      "nickname": "tete",
+      "createdAt": "24. 02. 22. 오후 01:04:25",
+      "content": "ㅋㅋ",
+      "writedTo": "jonathan"
+    }
+  ]
 }

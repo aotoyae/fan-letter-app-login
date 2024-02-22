@@ -2,7 +2,7 @@ import styled from "styled-components";
 import uuid from "react-uuid";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addLetter } from "../store/modules/letters";
+import { __addLetter } from "../store/modules/letters";
 import { setMember } from "../store/modules/member";
 import { useNavigate } from "react-router-dom";
 
@@ -60,7 +60,7 @@ function Form() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const activeMember = useSelector((state) => state.member);
-  const { avatar, nickname } = useSelector((state) => state.authLogin);
+  const { avatar, nickname, useId } = useSelector((state) => state.authLogin);
   const [content, setContent] = useState("");
 
   useEffect(() => {
@@ -75,7 +75,9 @@ function Form() {
     } else {
       const newLetter = {
         id: uuid(),
+        useId,
         nickname,
+        // createdAt: new Date().toString(),
         createdAt: new Date().toLocaleDateString("ko", {
           year: "2-digit",
           month: "2-digit",
@@ -88,7 +90,7 @@ function Form() {
         writedTo: activeMember,
       };
 
-      dispatch(addLetter(newLetter));
+      dispatch(__addLetter(newLetter));
       setContent("");
     }
   };

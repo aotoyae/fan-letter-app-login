@@ -9,4 +9,6 @@ const store = configureStore(
   devToolsEnhancer()
 );
 
-export default store;
+const getStore = () => store;
+
+export default getStore;

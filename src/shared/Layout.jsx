@@ -1,8 +1,6 @@
 import styled from "styled-components";
-import { Provider } from "react-redux";
 import Header from "components/Header";
 import Footer from "components/Footer";
-import store from "../store/config/configStore";
 
 const StLayout = styled.div`
   margin: 0;
@@ -17,11 +15,9 @@ const StCihldren = styled.div`
 function Layout({ children }) {
   return (
     <StLayout>
-      <Provider store={store}>
-        <Header />
-        <StCihldren>{children}</StCihldren>
-        <Footer />
-      </Provider>
+      <Header />
+      <StCihldren>{children}</StCihldren>
+      <Footer />
     </StLayout>
   );
 }
