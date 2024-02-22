@@ -1,14 +1,23 @@
 import LetterBtn from "components/LetterBtn";
 import ToHeader from "components/ToHeader";
 import Avatar from "components/common/Avatar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { deleteLetter, editLetter } from "../store/modules/letters";
+import {
+  __deleteLetter,
+  __editLetter,
+  __getLetters,
+} from "../store/modules/letters";
 import styled from "styled-components";
 
 const StContainer = styled.div`
   height: 65vh;
+`;
+
+const LoadingText = styled.h1`
+  line-height: 65vh;
+  color: red;
 `;
 
 const StWrap = styled.div`
@@ -73,7 +82,8 @@ const Content = styled.p`
 `;
 
 function Detail() {
-  const letters = useSelector((state) => state.letters);
+  const { letters, isLoading } = useSelector((state) => state.letters);
+  const myUserId = useSelector((state) => state.authLogin.userId);
   const dispatch = useDispatch();
 
   const [isEditing, setIsEditing] = useState(false);
@@ -81,14 +91,11 @@ function Detail() {
 
   const navigate = useNavigate();
   const { id } = useParams();
-  const { nickName, createdAt, content, writedTo } = letters.find(
-    (letter) => letter.id === id
-  );
 
   const onEditDone = () => {
     if (!editingText) return alert("수정사항이 없습니다.");
 
-    dispatch(editLetter({ id, editingText }));
+    dispatch(__editLetter({ id, editingText }));
     setIsEditing(false);
     setEditingText("");
   };
@@ -97,10 +104,22 @@ function Detail() {
     const answer = window.confirm("정말로 삭제하시겠습니까?");
     if (!answer) return;
 
-    navigate(`/member/${writedTo}`);
-
-    dispatch(deleteLetter(id));
+    navigate(`/member/${id}`);
+    dispatch(__deleteLetter(id));
   };
+
+  useEffect(() => {
+    dispatch(__getLetters());
+  }, [dispatch]);
+
+  if (isLoading) {
+    return <LoadingText>Loading..</LoadingText>;
+  }
+
+  const { nickName, createdAt, content, userId } = letters.find(
+    (letter) => letter.id === id
+  );
+  const isMine = myUserId === userId;
 
   return (
     <StContainer>
@@ -127,10 +146,12 @@ function Detail() {
           </>
         ) : (
           <>
-            <Btns>
-              <LetterBtn text="modify" onClick={() => setIsEditing(true)} />
-              <LetterBtn text="delete" onClick={onDeleteLetter} />
-            </Btns>
+            {isMine && (
+              <Btns>
+                <LetterBtn text="modify" onClick={() => setIsEditing(true)} />
+                <LetterBtn text="delete" onClick={onDeleteLetter} />
+              </Btns>
+            )}
             <Content>{content}</Content>
           </>
         )}

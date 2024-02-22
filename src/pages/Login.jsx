@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { toast } from "react-toastify";
-import { login } from "store/modules/authLogin";
+import { __login } from "store/modules/authLogin";
 import { authApi } from "api/apiIndex";
 
 const StContainer = styled.div`
@@ -119,20 +119,7 @@ function Login() {
       } else if (checkPasswordInvalid()) {
         toast.warn(`비밀번호: 4~15자의 영문 소문자, 숫자를 입력해 주세요.`);
       } else {
-        try {
-          const { data } = await authApi.post(`/login?expiresIn=10s`, {
-            id,
-            password,
-          });
-          const { accessToken, avatar, nickname, userId } = data;
-          if (data.success) {
-            dispatch(login({ accessToken, avatar, nickname, userId }));
-            toast.success(`${id}님 반갑습니다.`);
-            navigate(`/`);
-          }
-        } catch (error) {
-          toast.error(error.response.data.message);
-        }
+        dispatch(__login({ id, password }));
       }
     } else {
       if (checkNicknameInvalid()) {

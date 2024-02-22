@@ -9,6 +9,7 @@ const StLayout = styled.div`
 `;
 
 const StCihldren = styled.div`
+  height: 65vh;
   border: 1px solid #000;
 `;
 

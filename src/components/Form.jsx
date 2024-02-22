@@ -60,7 +60,7 @@ function Form() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const activeMember = useSelector((state) => state.member);
-  const { avatar, nickname, useId } = useSelector((state) => state.authLogin);
+  const { avatar, nickname, userId } = useSelector((state) => state.authLogin);
   const [content, setContent] = useState("");
 
   useEffect(() => {
@@ -75,7 +75,7 @@ function Form() {
     } else {
       const newLetter = {
         id: uuid(),
-        useId,
+        userId,
         nickname,
         // createdAt: new Date().toString(),
         createdAt: new Date().toLocaleDateString("ko", {

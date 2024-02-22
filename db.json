@@ -1,17 +1,19 @@
 {
   "letters": [
     {
-      "id": "bf63638c-9fa8-02a5-0e8e-96871fcc52c5",
+      "id": "3d9fd470-eb46-2984-8e0e-de5d910e0ba7",
+      "userId": "tete12",
       "nickname": "tete",
-      "createdAt": "24. 02. 22. 오후 01:04:21",
-      "content": "ㅎㅎ",
+      "createdAt": "24. 02. 22. 오후 05:37:04",
+      "content": "tete",
       "writedTo": "jonathan"
     },
     {
-      "id": "46b5f369-5999-f9a7-5f3b-a42318fc28b8",
+      "id": "46bbe8b5-1935-9f03-e72c-541d1e41a885",
+      "userId": "tete11",
       "nickname": "tete",
-      "createdAt": "24. 02. 22. 오후 01:04:25",
-      "content": "ㅋㅋ",
+      "createdAt": "24. 02. 22. 오후 05:54:11",
+      "content": "gegegegegeg",
       "writedTo": "jonathan"
     }
   ]
