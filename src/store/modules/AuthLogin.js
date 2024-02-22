@@ -16,10 +16,14 @@ export const __login = createAsyncThunk(
   "login",
   async ({ id, password }, thunkAPI) => {
     try {
-      const { data } = await authApi.post(`/login?expiresIn=10m`, {
-        id,
-        password,
-      });
+      const { data } = await authApi.post(
+        `/login`,
+        // ?expiresIn=10m
+        {
+          id,
+          password,
+        }
+      );
       const { accessToken, avatar, nickname, userId } = data;
       if (data.success) {
         toast.success(`${id}님 반갑습니다.`);

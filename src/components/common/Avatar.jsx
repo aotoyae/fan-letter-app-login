@@ -19,6 +19,7 @@ const UserFigure = styled.figure`
 
   border-radius: 50%;
   overflow: hidden;
+
   & img {
     width: 100%;
     height: 100%;
@@ -27,10 +28,11 @@ const UserFigure = styled.figure`
   }
 `;
 
-function Avatar({ size }) {
+function Avatar({ src, size }) {
   return (
     <UserFigure size={size}>
-      <img src={profile} alt="아바타이미지" />
+      {/* 이미지 해결 필요 */}
+      <img src={src ?? profile} alt="아바타이미지" />
     </UserFigure>
   );
 }
