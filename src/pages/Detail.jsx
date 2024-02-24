@@ -116,7 +116,7 @@ function Detail() {
     return <LoadingText>Loading..</LoadingText>;
   }
 
-  const { nickName, createdAt, content, userId } = letters.find(
+  const { nickname, createdAt, content, userId } = letters.find(
     (letter) => letter.id === id
   );
   const isMine = myUserId === userId;
@@ -128,7 +128,7 @@ function Detail() {
         <UserSection>
           <Avatar size="large" />
           <UserInfo>
-            <h2>{nickName}</h2>
+            <h2>{nickname}</h2>
             <time>{createdAt}</time>
           </UserInfo>
         </UserSection>

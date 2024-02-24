@@ -64,10 +64,19 @@ function LetterList() {
               onClick={() => navigate(`/detail/${letter.id}`)}
             >
               <UserSection>
-                <Avatar />
+                <Avatar src={letter.avatar} />
                 <UserInfo>
-                  <h2>{letter.nickName}</h2>
-                  <time>{letter.createdAt}</time>
+                  <h2>{letter.nickname}</h2>
+                  <time>
+                    {new Date(letter.createdAt).toLocaleDateString("ko", {
+                      year: "2-digit",
+                      month: "2-digit",
+                      day: "2-digit",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      second: "2-digit",
+                    })}
+                  </time>
                 </UserInfo>
               </UserSection>
               <Content>{letter.content}</Content>

@@ -11,7 +11,7 @@ const initialState = {
 const getLettersFromDB = async () => {
   const { data } = await jsonApi.get(
     `/letters`
-    // `http://localhost:5000/letters?_sort=createdAt&_order=desc`
+    // `letters?_sort=createdAt&_order=desc`
     // 내림차순 해결 필요
   );
   return data;
