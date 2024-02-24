@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Avatar from "./common/Avatar";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { __getLetters } from "store/modules/letters";
+import { useSelector } from "react-redux";
+import { useQuery } from "@tanstack/react-query";
+import { getLetters } from "api/queryFnc";
 
 const StLi = styled.li`
   margin: 10px 0;
@@ -39,14 +39,16 @@ const Content = styled.p`
 `;
 
 function LetterList() {
+  const { isLoading, data: letters } = useQuery({
+    queryKey: ["letters"],
+    queryFn: getLetters,
+  });
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const letters = useSelector((state) => state.letters.letters);
   const activeMember = useSelector((state) => state.member);
 
-  useEffect(() => {
-    dispatch(__getLetters());
-  }, [dispatch]);
+  if (isLoading) {
+    return <h1>Loading..</h1>;
+  }
 
   const filteredLetters = letters.filter(
     (letter) => letter.writedTo === activeMember

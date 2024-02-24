@@ -2,9 +2,10 @@ import styled from "styled-components";
 import uuid from "react-uuid";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { __addLetter } from "../store/modules/letters";
 import { setMember } from "../store/modules/member";
 import { useNavigate } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { addLetter } from "api/mutationFnc";
 
 const StForm = styled.form`
   height: 100%;
@@ -57,6 +58,13 @@ const StBtn = styled.button`
 `;
 
 function Form() {
+  const queryClient = useQueryClient();
+  const { mutate: mutateToAdd } = useMutation({
+    mutationFn: addLetter,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries("letters");
+    },
+  });
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const activeMember = useSelector((state) => state.member);
@@ -83,7 +91,7 @@ function Form() {
         writedTo: activeMember,
       };
 
-      dispatch(__addLetter(newLetter));
+      mutateToAdd(newLetter);
       setContent("");
     }
   };

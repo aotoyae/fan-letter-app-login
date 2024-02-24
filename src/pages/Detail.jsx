@@ -1,15 +1,13 @@
 import LetterBtn from "components/LetterBtn";
 import ToHeader from "components/ToHeader";
 import Avatar from "components/common/Avatar";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  __deleteLetter,
-  __editLetter,
-  __getLetters,
-} from "../store/modules/letters";
 import styled from "styled-components";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getLetters } from "api/queryFnc";
+import { deleteLetter, editLetter } from "api/mutationFnc";
 
 const StContainer = styled.div`
   height: 65vh;
@@ -82,9 +80,27 @@ const Content = styled.p`
 `;
 
 function Detail() {
-  const { letters, isLoading } = useSelector((state) => state.letters);
+  const queryClient = useQueryClient();
+  const { data: letters, isLoading } = useQuery({
+    queryKey: ["letters"],
+    queryFn: getLetters,
+  });
+
+  const { mutate: mutateToEdit } = useMutation({
+    mutationFn: editLetter,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(["letters"]);
+    },
+  });
+
+  const { mutate: mutateToDelete } = useMutation({
+    mutationFn: deleteLetter,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(["letters"]);
+    },
+  });
+
   const myUserId = useSelector((state) => state.authLogin.userId);
-  const dispatch = useDispatch();
 
   const [isEditing, setIsEditing] = useState(false);
   const [editingText, setEditingText] = useState("");
@@ -95,7 +111,7 @@ function Detail() {
   const onEditDone = () => {
     if (!editingText) return alert("수정사항이 없습니다.");
 
-    dispatch(__editLetter({ id, editingText }));
+    mutateToEdit({ id, editingText });
     setIsEditing(false);
     setEditingText("");
   };
@@ -105,18 +121,14 @@ function Detail() {
     if (!answer) return;
 
     navigate(`/member/${id}`);
-    dispatch(__deleteLetter(id));
+    mutateToDelete(id);
   };
-
-  useEffect(() => {
-    dispatch(__getLetters());
-  }, [dispatch]);
 
   if (isLoading) {
     return <LoadingText>Loading..</LoadingText>;
   }
 
-  const { nickname, createdAt, content, userId } = letters.find(
+  const { avatar, nickname, createdAt, content, userId } = letters.find(
     (letter) => letter.id === id
   );
   const isMine = myUserId === userId;
@@ -126,7 +138,7 @@ function Detail() {
       <ToHeader />
       <StWrap>
         <UserSection>
-          <Avatar size="large" />
+          <Avatar size="large" src={avatar} />
           <UserInfo>
             <h2>{nickname}</h2>
             <time>{createdAt}</time>
